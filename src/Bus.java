@@ -59,6 +59,10 @@ public class Bus extends Transport<DriverD> {
         throw new TransportTypeException("Автобусам проходить диагностику не нужно");
     }
 
+    @Override
+    public boolean isDiagnosticPassed() {
+        return false;
+    }
 
     public BodyType getBodyType() {
         return bodyType;

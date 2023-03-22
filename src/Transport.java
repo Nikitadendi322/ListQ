@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -7,7 +8,8 @@ public abstract class Transport<T extends Driver> implements Competing {
     private double engineVolume;
     private boolean diagnosticPassed;
     private Type type;
-    private List<Mechanic> mechanicList;
+    private List<Mechanic> mechanicList = new ArrayList<>();
+    private List<Driver> driverList = new ArrayList<>();
 
 
     private T driver;
@@ -38,6 +40,7 @@ public abstract class Transport<T extends Driver> implements Competing {
     public void setDiagnosticPassed(boolean diagnosticPassed) {
         this.diagnosticPassed = diagnosticPassed;
     }
+
     public abstract String repair();
 
     public String getBrand() {
@@ -82,19 +85,6 @@ public abstract class Transport<T extends Driver> implements Competing {
     abstract boolean passDiagnostic() throws TransportTypeException;
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Transport<?> transport = (Transport<?>) o;
-        return Double.compare(transport.engineVolume, engineVolume) == 0 && diagnosticPassed == transport.diagnosticPassed && brand.equals(transport.brand) && model.equals(transport.model) && driver.equals(transport.driver);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(diagnosticPassed);
-    }
-
-    @Override
     public void pitStop() {
 
     }
@@ -115,9 +105,23 @@ public abstract class Transport<T extends Driver> implements Competing {
     public boolean checkTransportNeedService() {
         try {
             passDiagnostic();
-        }    catch(TransportTypeException e){
-                return false;
-            }
-            return true;
+        } catch (TransportTypeException e) {
+            return false;
         }
+        return true;
     }
+
+
+    public int hashCode() {
+        return Objects.hash(brand, model, engineVolume, driverList, mechanicList);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this==o)return true;
+        if (o==null||getClass()!=o.getClass())return false;
+        Transport transport=(Transport)o;
+        return Objects.equals(brand,transport.brand)&&Objects.equals(model,transport.model)&&Objects.equals(engineVolume,transport.engineVolume)&&Objects.equals(driverList,transport.driverList)&&Objects.equals(mechanicList,transport.mechanicList);
+    }
+}
+

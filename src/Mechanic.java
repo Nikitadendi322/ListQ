@@ -38,4 +38,15 @@ public class Mechanic {
     public void performMaintenance(Bus bus) {
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
 }
