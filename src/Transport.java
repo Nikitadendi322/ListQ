@@ -37,9 +37,7 @@ public abstract class Transport<T extends Driver> implements Competing {
         return getType().name();
     }
 
-    public void setDiagnosticPassed(boolean diagnosticPassed) {
-        this.diagnosticPassed = diagnosticPassed;
-    }
+
 
     public abstract String repair();
 
